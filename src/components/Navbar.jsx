@@ -12,7 +12,7 @@ function Navbar() {
             alt="Logo"
             className="h-8 mr-2"
           />
-          <span className="text-lg font-bold">Your Logo</span>
+          <span className="text-lg font-bold">ShopZ</span>
         </NavLink>
         <div className="flex items-center space-x-4">
           <NavLink to="/" className="hover:text-gray-300">
