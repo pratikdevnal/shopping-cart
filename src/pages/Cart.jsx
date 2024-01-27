@@ -1,41 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { CartSlice } from "../redux/slices/CartSlice";
 import { Link } from "react-router-dom";
-import Cartitem from "../components/Cartitem";
+import CartItem from "../components/CartItem";
+
 function Cart() {
   const { cart } = useSelector((state) => state);
   const [totalAmount, setTotalAmount] = useState(0);
+
   useEffect(() => {
     setTotalAmount(cart.reduce((acc, curr) => acc + curr.price, 0));
   }, [cart]);
+
   return (
-    <div>
+    <div className="mt-16">
       {cart.length > 0 ? (
-        <div>
-          <div>
-            {cart.map((item, index) => {
-              return <Cartitem key={item.id} item={item} itemIndex={index} />;
-            })}
+        <div className="flex flex-col md:flex-row">
+          <div className="md:w-3/4">
+            {cart.map((item, index) => (
+              <CartItem key={item.id} item={item} />
+            ))}
           </div>
-          <div>
-            <div>
-              <div>Your Cart</div>
-              <div>Summary</div>
-              <p>
-                <span>Total Items: {cart.length}</span>
-              </p>
-            </div>
-            <div>
-              <p>Total Amount: {totalAmount}</p>
+          <div className="md:w-1/4 mt-4 md:mt-0 md:ml-4">
+            <div className="bg-white p-4 rounded-md shadow-md">
+              <div className="font-bold text-lg mb-4">Order Summary</div>
+              <p>Total Items: {cart.length}</p>
+              <p>Total Amount: ${totalAmount.toFixed(2)}</p>
+              <Link to="/checkout">
+                <button className="bg-green-600 hover:bg-green-700 text-white rounded-md py-2 w-full mt-4">
+                  Proceed to Checkout
+                </button>
+              </Link>
             </div>
           </div>
         </div>
       ) : (
-        <div>
-          <h1>Cart is Empty</h1>
-          <Link to={"/"}>
-            <button>Shop Now</button>
+        <div className="min-h-[80vh] flex flex-col items-center justify-center">
+          <h1 className="text-gray-700 font-semibold text-xl mb-2">
+            Your cart is empty!
+          </h1>
+          <Link to="/">
+            <button className="bg-green-600 hover:bg-purple-50 rounded-lg text-white transition duration-300 ease-linear mt-5 border-2 border-green-600 font-semibold hover:text-green-700 p-3 px-10 tracking-wider">
+              SHOP NOW
+            </button>
           </Link>
         </div>
       )}

@@ -14,10 +14,8 @@ function Home() {
       const data = await res.json();
       setPosts(data);
       setLoading(false);
-      console.log(data);
-      console.log(posts);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching product data:", error);
       setPosts([]);
       setLoading(false);
     }
@@ -28,18 +26,18 @@ function Home() {
   }, []);
 
   return (
-    <div>
+    <div className="container mx-auto p-4 mt-16">
       {loading ? (
         <Spinner />
       ) : posts.length > 0 ? (
-        <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {posts.map((post) => (
             <Product key={post.id} post={post} />
           ))}
         </div>
       ) : (
         <div>
-          <p>No Data Found</p>
+          <p className="text-gray-500">No Data Found</p>
         </div>
       )}
     </div>
